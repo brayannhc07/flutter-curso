@@ -1,22 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:productos_app/models/models.dart';
 
 class ProductCard extends StatelessWidget {
+  final Product product;
+
+  const ProductCard({Key? key, required this.product}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Container(
-        margin: EdgeInsets.only(top: 30, bottom: 50),
+        margin: EdgeInsets.only(top: 15, bottom: 25),
         width: double.infinity,
         height: 400,
         decoration: _cardBorders(),
         child: Stack(
           alignment: Alignment.bottomLeft,
           children: [
-            _BackgroundImage(),
-            _ProductDetails(),
-            Positioned(top: 0, right: 0, child: _PriceTag()),
-            Positioned(top: 0, left: 0, child: _NotAvaliable()),
+            _BackgroundImage(product.picture),
+            _ProductDetails(
+              title: product.name,
+              subtitle: product.id!,
+            ),
+            Positioned(
+                top: 0, right: 0, child: _PriceTag(price: product.price)),
+            if (!product.available)
+              Positioned(
+                  top: 0,
+                  left: 0,
+                  child: _NotAvailable(
+                    available: product.available,
+                  )),
           ],
         ),
       ),
@@ -34,7 +49,10 @@ class ProductCard extends StatelessWidget {
   }
 }
 
-class _NotAvaliable extends StatelessWidget {
+class _NotAvailable extends StatelessWidget {
+  final bool available;
+
+  const _NotAvailable({Key? key, required this.available}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -59,6 +77,9 @@ class _NotAvaliable extends StatelessWidget {
 }
 
 class _PriceTag extends StatelessWidget {
+  final double price;
+
+  const _PriceTag({Key? key, required this.price}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -68,7 +89,7 @@ class _PriceTag extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Text(
-            "\$103.99",
+            "\$$price",
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
         ),
@@ -84,6 +105,11 @@ class _PriceTag extends StatelessWidget {
 }
 
 class _ProductDetails extends StatelessWidget {
+  final String title;
+  final String subtitle;
+
+  const _ProductDetails({Key? key, required this.title, required this.subtitle})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -97,7 +123,7 @@ class _ProductDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Disco duro G",
+              title,
               style: TextStyle(
                   fontSize: 20,
                   color: Colors.white,
@@ -106,7 +132,7 @@ class _ProductDetails extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              "Id del Disco Duro",
+              subtitle,
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.white,
@@ -125,6 +151,9 @@ class _ProductDetails extends StatelessWidget {
 }
 
 class _BackgroundImage extends StatelessWidget {
+  final String? url;
+
+  const _BackgroundImage(this.url);
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -132,11 +161,16 @@ class _BackgroundImage extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: 400,
-        child: FadeInImage(
-          placeholder: AssetImage('assets/jar-loading.gif'),
-          image: NetworkImage('https://via.placeholder.com/400x300/f6f6f6'),
-          fit: BoxFit.cover,
-        ),
+        child: url == null
+            ? Image(
+                image: AssetImage('assets/no-image.png'),
+                fit: BoxFit.cover,
+              )
+            : FadeInImage(
+                placeholder: AssetImage('assets/jar-loading.gif'),
+                image: NetworkImage(url!),
+                fit: BoxFit.cover,
+              ),
       ),
     );
   }
