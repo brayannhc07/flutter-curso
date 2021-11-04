@@ -1,4 +1,4 @@
-package com.brayannhc.notificaciones
+package com.bryannhc.notificaciones
 
 import io.flutter.embedding.android.FlutterActivity
 
