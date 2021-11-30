@@ -74,15 +74,15 @@ class PeliculaDetalle extends StatelessWidget {
               children: <Widget>[
                 Text(pelicula.title,
                     style: Theme.of(context).textTheme.headline4,
-                    overflow: TextOverflow.ellipsis),
+                    overflow: TextOverflow.clip),
                 Text(pelicula.originalTitle,
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context).textTheme.subtitle2,
                     overflow: TextOverflow.ellipsis),
                 Row(
                   children: <Widget>[
                     Icon(Icons.star_border),
                     Text(pelicula.voteAverage.toString(),
-                        style: Theme.of(context).textTheme.subtitle1)
+                        style: Theme.of(context).textTheme.subtitle2)
                   ],
                 )
               ],
