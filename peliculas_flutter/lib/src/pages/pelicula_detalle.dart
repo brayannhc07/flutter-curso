@@ -45,7 +45,7 @@ class PeliculaDetalle extends StatelessWidget {
         background: FadeInImage(
           image: NetworkImage(pelicula.getBackgroundImg()),
           placeholder: AssetImage('assets/img/loading.gif'),
-          fadeInDuration: Duration(microseconds: 150),
+          fadeInDuration: Duration(milliseconds: 150),
           fit: BoxFit.cover,
         ),
       ),
@@ -73,7 +73,7 @@ class PeliculaDetalle extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(pelicula.title,
-                    style: Theme.of(context).textTheme.headline1,
+                    style: Theme.of(context).textTheme.headline4,
                     overflow: TextOverflow.ellipsis),
                 Text(pelicula.originalTitle,
                     style: Theme.of(context).textTheme.subtitle1,
