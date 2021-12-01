@@ -12,8 +12,6 @@ class Peliculas {
 }
 
 class Pelicula {
-  late String uniqueId;
-
   int? voteCount;
   int? id;
   bool? video;
@@ -62,6 +60,9 @@ class Pelicula {
     overview = json['overview'];
     releaseDate = json['release_date'];
   }
+
+  get uniqueId => "$id-tarjeta";
+  get uniqueIdBanner => "$id-banner";
 
   getPosterImg() {
     if (posterPath == null) {
